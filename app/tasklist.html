@@ -4,13 +4,23 @@
 </head>
 <body>
 <h2>asdf</h2>
+
+
   {{>tasks}}
 </body>
 
 <template name="tasks">
+  <h1>Add Tasks</h1>
+  <form class="add-task">
+    <label>Task name</label>
+    <input type="text" name="name" placeholder="Add Task">
+    <input type="submit" value="Submit">
+  </form>
+  <hr/>
+
   <ul>
   {{#each tasks}}
-    <li>{{name}}</li>
+    <li>{{name}}<a href="#" class="delete-task">nope not doing it</a></li>
   {{/each}}
   </ul>
 </template>
