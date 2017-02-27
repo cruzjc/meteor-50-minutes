@@ -3,24 +3,26 @@
   <title>Title</title>
 </head>
 <body>
-<h2>asdf</h2>
-
-
-  {{>tasks}}
+{{>tasks}}
 </body>
 
 <template name="tasks">
+  {{>loginButtons}}
   <h1>Add Tasks</h1>
+  {{#if currentUser}}
   <form class="add-task">
     <label>Task name</label>
     <input type="text" name="name" placeholder="Add Task">
     <input type="submit" value="Submit">
   </form>
+  {{else}}
+    <p>Please login</p>
+  {{/if}}
   <hr/>
 
   <ul>
-  {{#each tasks}}
-    <li>{{name}}<a href="#" class="delete-task">nope not doing it</a></li>
-  {{/each}}
+    {{#each tasks}}
+    <li>{{name}}{{#if currentUser}}<a href="#" class="delete-task">nope not doing it</a>{{/if}}</li>
+    {{/each}}
   </ul>
 </template>

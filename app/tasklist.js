@@ -15,17 +15,14 @@ if(Meteor.isClient){
   Template.tasks.events({
     "submit .add-task":function(event){
       var name=event.target.name.value;
-      Tasks.insert({
-        name:name,
-        createdAt:new Date()
-      });
+      Meteor.call('addTask',name)
 
       event.target.name.value='';
       return false;
     },
     "click .delete-task":function(event){
       if(confirm('Delete Tasks?')){
-        Tasks.remove(this._id);
+        Meteor.call('deleteTask',this._id)
       }
     }
 
@@ -36,3 +33,25 @@ if(Meteor.isClient){
 if(Meteor.isServer){
 
 }
+
+Meteor.methods({
+  addTask:function(name){
+    if(!Meteor.userId()){
+      throw new Meteor.Error('GTFO');
+    }
+
+    Tasks.insert({
+      name:name,
+      createdAt:new Date(),
+      userId:Meteor.userId()
+    });
+
+  },
+
+  deleteTask:function(taskId){
+    Tasks.remove(taskId);
+  }
+
+
+
+})
